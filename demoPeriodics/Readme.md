@@ -18,22 +18,29 @@ for a given function is passed.
 
 ## Core logic
 1. Create an entry for the event you want to schedule regularly.
-        Periodics IntervalMgmt;
-        . . .
+```C++
+        Periodics IntervalMgmt;                    // declared (created) as global object 
+        // . . .
+        // Initialization...
         IntervalMgmt.set ("EVENT", (int) 5000 );   // refresh every 5 seconds (Arduino and alike)
-        - or -
+        // - or -
         IntervalMgmt.set ("EVENT", (int) 5 );      // refresh every 5 seconds (Mac, Linux, ...)
-
-2. In your (eternal) loop, update the schedules (array of).
+```
+2. In your (eternal) main loop, update the schedules (array of intervals/periods).
+```C++
         IntervalMgmt.refresh ();
+````
 
 3. Check for the planned period passed and handle the event.
+```C++
         if  ( IntervalMgmt.check ("EVENT") ) {
+            // . . .
             // event handling part
-            . . .
+            // . . .
         }
-
+```
 The IntervalMgmt.check function clears the 'passed' at every call. Hence when it returns '1', all
 dependent events must be handled following this one check.
 
-[Github MD](https://guides.github.com/features/mastering-markdown/)
+## Example
+The main program 'main.ccp' demonstrates briefly how to use this module.
