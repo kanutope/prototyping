@@ -44,3 +44,4 @@ dependent events must be handled following this one check.
 
 ## Example
 The main program 'main.ccp' demonstrates briefly how to use this module.
+It can be built against and runs on Mac (Linux) and Arduino (ESP8266)
