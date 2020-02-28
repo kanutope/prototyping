@@ -3,7 +3,7 @@ Some prototyping with microboards à la Arduino, ESP8266 and Raspberry PI.
 Exploring and investigating the integration with Mosquitto MQTT broker and Home Assistant.
 
 # modules
-## _Periodics_
+## [_Periodics_](https://github.com/kanutope/prototyping/tree/master/demoPeriodics)
 * Purpose  
 manages an array of interval periods to support the execution of recurrent events on a regular, polled basis. Application: Arduino and alikes.
 
