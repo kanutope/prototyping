@@ -40,4 +40,4 @@ Keeping a datalogger in memory - e.g. sensor values.
         }
 ```  
 ## Example
-The main program ['example.ccp'] (https://github.com/kanutope/prototyping/blob/master/roundRobin/src/example.cpp) demonstrates briefly how to use this module. It can be built against and runs on Mac (Linux) and Arduino (ESP8266).
+The main program ['example.ccp'](https://github.com/kanutope/prototyping/blob/master/roundRobin/src/example.cpp) demonstrates briefly how to use this module. It can be built against and runs on Mac (Linux) and Arduino (ESP8266).
