@@ -27,6 +27,8 @@ Keeping a datalogger in memory - e.g. sensor values.
 
 3. Check for the planned period passed and handle the event.
 ```C++
+	dataRecord 		rec;
+        // . . .
         // one can print to stdout (Serial) the entire buffer of records
         Pressure.print ();
         // . . .
@@ -38,5 +40,4 @@ Keeping a datalogger in memory - e.g. sensor values.
         }
 ```  
 ## Example
-The main program ['example.ccp'] (http://add.link) demonstrates briefly how to use this module.
-It can be built against and runs on Mac (Linux) and Arduino (ESP8266)
+The main program ['example.ccp'] (https://github.com/kanutope/prototyping/blob/master/roundRobin/src/example.cpp) demonstrates briefly how to use this module. It can be built against and runs on Mac (Linux) and Arduino (ESP8266).
