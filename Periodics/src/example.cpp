@@ -1,3 +1,17 @@
+/* =========================================================================
+GNU All-Permissive License
+--------------------------
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.  This file is offered as-is,
+without any warranty.
+========================================================================= */
+
+/***************************************************************************
+ * Sample main program demonstrating the use and features of the Periodics module.
+ * It can be built against and runs on Mac (Linux) and Arduino (ESP8266).
+***************************************************************************/
+
 #include    "Periodics.h"
 
 Periodics IntervalMgmt;

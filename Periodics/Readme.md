@@ -43,5 +43,4 @@ The IntervalMgmt.check function clears the 'passed' at every call. Hence when it
 dependent events must be handled following this one check.
 
 ## Example
-The main program ['demoPeriodics.cpp'](https://github.com/kanutope/prototyping/blob/master/Periodics/src/demoPeriodics.cpp) demonstrates briefly how to use this module.
-It can be built against and runs on Mac (Linux) and Arduino (ESP8266)
+The main program ['example.cpp'](https://github.com/kanutope/prototyping/blob/master/Periodics/src/example.cpp) demonstrates briefly how to use this module. It can be built against and runs on Mac (Linux) and Arduino (ESP8266)
