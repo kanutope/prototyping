@@ -25,7 +25,7 @@ Keeping a datalogger in memory - e.g. sensor values.
         Pressure.add(rec);
 ````
 
-3. Check for the planned period passed and handle the event.
+3. After having added or while adding more records, you can loop over the present set.
 ```C++
 	dataRecord 		rec;
         // . . .
