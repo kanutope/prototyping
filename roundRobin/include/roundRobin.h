@@ -1,22 +1,13 @@
-/* =========================================================================
-roundRobin - manages series of values or structures round robin wise, for
-data logging purpose.
+/***************************************************************************
+ * roundRobin - manages series of values or structures round robin wise, for
+ * data logging purpose.
+ *
+ * MIT License
+ *     Copyright (c) 2020 Paul Biesbrouck
+ * See file LICENSE included or <https://opensource.org/licenses/MIT>.
+ ***************************************************************************/
 
-    Copyright (C) 2020  Paul Biesbrouck
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
-========================================================================= */
+// SPDX-License-Identifier: MIT
 
 #ifndef roundRobin_H
 #define roundRobin_H
@@ -29,8 +20,6 @@ data logging purpose.
 #define     my_print(str)           Serial.printf(str)
 #define		my_printf(str, ...)		Serial.printf(str, __VA_ARGS__)
 #endif
-
-#define     TIMNOW                  (millis ())
 
 #else   // MAC, Linux, et alii
 
@@ -52,10 +41,9 @@ data logging purpose.
 
 typedef struct dataRecord {
     unsigned long   time;               // len 4
-    char            dateStamp[32];      // len 32
-    int             pressure;           // len 2
-    int             temperature;        // len 2
-    int             humidity;           // len 2
+    float           pressure;           // len 4
+    float           temperature;        // len 4
+    float           humidity;           // len 4
 
     void            print ();
 } dataRecord;

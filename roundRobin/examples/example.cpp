@@ -1,16 +1,13 @@
-/* =========================================================================
-GNU All-Permissive License
---------------------------
-Copying and distribution of this file, with or without modification,
-are permitted in any medium without royalty provided the copyright
-notice and this notice are preserved.  This file is offered as-is,
-without any warranty.
-========================================================================= */
-
 /***************************************************************************
  * Sample main program demonstrating the use and features of the RoundRobin module.
  * It can be built against and runs on Mac (Linux) and Arduino (ESP8266).
-***************************************************************************/
+ *
+ * MIT License
+ *     Copyright (c) 2020 Paul Biesbrouck
+ * See file LICENSE included or <https://opensource.org/licenses/MIT>.
+ ***************************************************************************/
+
+// SPDX-License-Identifier: MIT
 
 #include  "roundRobin.h"
 
@@ -18,13 +15,19 @@ roundRobin Pressure ((const int) 16);
 
 // some defines for testing purpose
 #ifdef  ARDUINO
+
+#define TIMNOW			(millis())
 #define	EPOCH(x)	    (x/1000 + 1582905719)	// Epoch 20200228-16040159 = 1582905719
 #define	INITRAND(x)		randomSeed (x)
 #define	RANDOM		    (random (0x80000000))    // just for testing purpose
+
 #else	// MAC, Linux, et alii
+
+#define TIMNOW			((time_t) time(NULL))
 #define	EPOCH(x)		(x)						// no conversion on Mac, Linux et alii
 #define	INITRAND(x)		srandom (x)
 #define	RANDOM			(random ())        // just for testing purpose
+
 #endif
 
 void
@@ -57,12 +60,10 @@ loop () {
 	if (counter < maxCnt) {
 		tClock = TIMNOW;
 		
-		rec.time = EPOCH(tClock) + 30*counter;
-		strcpy (rec.dateStamp, ctime ((const time_t *) &rec.time));
-		rec.dateStamp[strlen (rec.dateStamp)-1] = '\0';						// cutting off the last character '\n'
-		rec.pressure    = 100 * (1010.0F + 12 * (0.5 - RANDOM / denom));	// add some random portion
-		rec.temperature = 100 * (10.0F + 12 * (0.5 - RANDOM / denom));  	// add some random portion
-		rec.humidity    = 100 * (100.0F * RANDOM / denom);					// add some random portion
+		rec.time = EPOCH(tClock) + 30*counter;								// increment the time by 30 seconds
+		rec.pressure    = 1010.0F + 12 * (0.5 - RANDOM / denom);	// add some random portion
+		rec.temperature = 10.0F + 12 * (0.5 - RANDOM / denom);  	// add some random portion
+		rec.humidity    = 100.0F * RANDOM / denom;					// add some random portion
 		Pressure.add(rec);
 	} else if (counter == maxCnt) {
 		my_print("*** Calling class print() function\n");
@@ -75,6 +76,8 @@ loop () {
 			rec.print();
 			i = Pressure.next(&rec);
 		}
+	} else if (counter == (maxCnt+2)) {
+		my_printf("*** next() without first() => %d\n", Pressure.next(&rec));
 	} else {
 		stop = 1;
 	}
