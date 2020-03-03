@@ -32,7 +32,8 @@ void setup () {
 unsigned long long cycle = 0;
 
 void loop () {
-  char    buf[32];
+#define BUF_LEN   32
+  char    buf[BUF_LEN];
   time_t  tClock;
 
 
@@ -41,9 +42,9 @@ void loop () {
 
     tClock = TIMNOW;
 #ifdef ARDUINO
-    sprintf(buf, "%16lu\n", tClock / 1000);
+    snprintf(buf, BUF_LEN, "%16lu\n", tClock / 1000);
 #else   // MAC, Linux
-    sprintf(buf, "%s", ctime(&tClock));    // btw, ctime ends with a '\n'
+    snprintf(buf, BUF_LEN, "%s", ctime(&tClock));    // btw, ctime ends with a '\n'
 #endif
 
     if  ( IntervalMgmt.check ("EVENT1") ) {

@@ -39,6 +39,12 @@
 
 #endif
 
+// len=59 buf = {"time":4123456789,"Pa":102399.99,"°C":-01.99,"%h":  0.00}
+// const char 		*JSON_fmt = "{\"time\":%10lu,\"Pa\":%9.2f,\"*C\":%6.2f,\"%%h\":%6.2f}";
+#define	ROUNDROBIN_JSON_LEN		60		// buffer length required for JSON conversion
+
+typedef char jsonBuffer[ROUNDROBIN_JSON_LEN];
+
 typedef struct dataRecord {
     unsigned long   time;               // len 4
     float           pressure;           // len 4
@@ -46,6 +52,7 @@ typedef struct dataRecord {
     float           humidity;           // len 4
 
     void            print ();
+    void            *json (jsonBuffer);    // requires a string with the required lenght 
 } dataRecord;
 
 
@@ -53,8 +60,8 @@ class roundRobin {
     public:
         int         add (dataRecord record);
         int         get (dataRecord *record);
-        int         first(dataRecord *record);
-        int         next(dataRecord *record);
+        int         first (dataRecord *record);
+        int         next (dataRecord *record);
 
         int         reset ();
         void		unset ();

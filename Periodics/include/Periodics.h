@@ -46,11 +46,13 @@
 
 enum RRtype { RRint, RRlong, RRlonglong, RRfloat, RRdouble, RRinvalid };
 
+#define PERIOD_NAM_LEN     16
+
 typedef struct period_struct {
-    char              name[16];     // len: 16
-    int               period;       // len:  2
-    unsigned long     previous;     // len:  4
-    int               passed;       // len:  2
+    char              name[PERIOD_NAM_LEN];    // len: 16
+    int               period;           // len:  2
+    unsigned long     previous;         // len:  4
+    int               passed;           // len:  2
 } period_struct;                    // total: 24
 
 // using 'name' as drawback requires 'strcmp' for every operation (method) on an element.

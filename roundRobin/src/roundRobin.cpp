@@ -94,28 +94,6 @@ roundRobin::get (dataRecord *record) {
 }
 
 /*================================================================
- * dataRecord::print ()
- * -----------------
- * Print to stdout (Serial) one record.
-  ================================================================*/
-void
-dataRecord::print () {
-	char buf[26];
-
-// ctime returns fixed length string 'Thu Nov 24 18:22:48 1986\n\0', len=26 including ending '\0'
-	ctime_r((const time_t *) &time, buf);
-	buf[24] = '\0';		// eliminate terminating '\n'
-
-	my_printf ("time=%12lu date=%s press=%8.2f  temp=%8.2f humid=%8.2f\n"
-						, time
-						, buf
-						, pressure
-						, temperature
-						, humidity
-						);
-}
-
-/*================================================================
  * roundRobin::print () {
  * -----------------
  * Print to stdout (Serial) the entire buffer of records.
@@ -175,7 +153,7 @@ roundRobin::next (dataRecord *record) {
 }
 	
 /***************************************************************************
- * PRIVATE MEMBER FUNCTIONS                                                *
+ * roundRobin class PRIVATE MEMBER FUNCTIONS                               *
  ***************************************************************************/
 
 /*================================================================
@@ -224,4 +202,61 @@ roundRobin::next () {
 	else                                 indx = -1;
 
 	return (indx);
+}
+
+/***************************************************************************
+ * dataRecord struct PUBLIC MEMBER FUNCTIONS                               *
+ ***************************************************************************/
+
+/*================================================================
+ * dataRecord::print ()
+ * -----------------
+ * Print to stdout (Serial) one record.
+  ================================================================*/
+void
+dataRecord::print () {
+	char buf[26];
+
+// ctime returns fixed length string 'Thu Nov 24 18:22:48 1986\n\0', len=26 including ending '\0'
+	ctime_r((const time_t *) &time, buf);
+	buf[24] = '\0';		// eliminate terminating '\n'
+
+	my_printf ("time=%12lu date=%s press=%8.2f  temp=%8.2f humid=%8.2f\n"
+						, time
+						, buf
+						, pressure
+						, temperature
+						, humidity
+						);
+}
+
+// observe: degrees celsius '°' is an extended ascii character, not alway mapped/displayed properly, hence "*C"
+const char 		*JSON_fmt = "{\"time\":%10lu,\"Pa\":%9.2f,\"*C\":%6.2f,\"%%h\":%6.2f}";
+
+// assumptions => constraints applied
+//		time = unsigned long		maxvalue = 4294967295, hence %10lu must fit.
+//		pressure (Pascal)			*positive* float in the range of 1024 hpa (mbar) or below (at sea level),
+//									exceptionally in the range of 1048~1050 hpa,      hence f9.2% must fit.
+//		temperature (°C)			float in the range of -50.00 and +50.00,          hence f6.2% must fit.
+//		humidity (%h)				*postive* float in the range of 00.00 and 100.00, hence f6.2% must fit.
+
+/*================================================================
+ * dataRecord::json (jsonBuffer buf)
+ * ----------------
+ * Convert one dataRecord into JSON string.
+ * Buffer provided *must* have the required length, cfr. dataRecord::jsonLen.
+  ================================================================*/
+void *
+dataRecord::json (jsonBuffer buf) {
+
+	snprintf(buf
+		, ROUNDROBIN_JSON_LEN
+		, JSON_fmt
+		, time
+		, ((pressure < 0)         || (999999.99 < pressure)) ? -99.99 : pressure
+		, ((temperature < -99.99) || (999.99 < temperature)) ? -99.99 : temperature
+		, ((humidity < 0)         || (100 < humidity))       ? -99.99 : humidity
+	);
+
+	return(buf);
 }
