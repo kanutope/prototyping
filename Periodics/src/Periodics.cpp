@@ -160,7 +160,7 @@ Periodics::set (const char *name, int period) {
         newArray[i] = periods[i];
     }
 // initialize new period 
-    strncpy (newArray[rows].name, name, 15); newArray[rows].name[15] = '\0';
+    strncpy (newArray[rows].name, name, (PERIOD_NAM_LEN-2)); newArray[rows].name[(PERIOD_NAM_LEN-1)] = '\0';
     newArray[rows].period = period;
     newArray[rows].previous = TIMNOW;
     newArray[rows].passed = 0;
